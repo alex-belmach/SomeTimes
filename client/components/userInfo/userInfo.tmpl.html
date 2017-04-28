@@ -1,0 +1,17 @@
+<div class="user_info" ng-hide="hideSection">
+    <div class="username">{{username}}</div>
+    <div class="bookmark_button" ng-click="showBookmarks()">
+        <img src="/resources/min/bookmark.png" alt="favorite_icon">
+    </div>
+    <div class="logout_button" ng-click="logout()">Log out</div>
+    <div class="avatar_container">
+        <img ng-src="{{avatarUrl}}" alt="profile_image" class="avatar">
+        <div class="upload_button" ng-click="uploadAvatar()">
+            <span>UPLOAD</span>
+        </div>
+    </div>
+    <div class="upload_form">
+        <input type="text" placeholder=" type image url" ng-model="avatarUrl"
+               ng-model-options="{ updateOn: 'blur' }">
+    </div>
+</div>

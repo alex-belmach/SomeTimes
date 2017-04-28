@@ -1,0 +1,23 @@
+<div class="main_page">
+    <div class="wrapper">
+        <user-info hide-section="hide.userInfo" show-bookmarks="showBookmarks" hide-all="hideAll"></user-info>
+        <div class="content">
+            <div class="header">
+                <div class="logo">
+                    <h1 class="heading_ref" ng-click="hideAll()">Some Times</h1>
+                </div>
+                <p>Handy news-service to keep track last trends and events of a world</p>
+            </div>
+            <div class="main_section">
+                <div class="page_body container">
+                    <select-form></select-form>
+                    <section-list></section-list>
+                    <news></news>
+                    <bookmarks></bookmarks>
+                </div>
+            </div>
+        </div>
+        <footer-section show-login="hide.userInfo"></footer-section>
+    </div>
+    <spinner></spinner>
+</div>

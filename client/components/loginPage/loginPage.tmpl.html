@@ -1,0 +1,20 @@
+<div class="login_page" ng-controller="LoginPageCtrl">
+    <div class="container">
+        <h3 class="login_title">Enter your credentials</h3>
+        <div class="error_note" ng-show="showErrorNote">Please double check your entries</div>
+        <form>
+            <fieldset class="form-group fieldset">
+                <input type="text" class="username" name="username" placeholder="Username" ng-model="username">
+                <input type="password" class="password" name="password" placeholder="Password" ng-model="password">
+            </fieldset>
+            <div>
+                <input type="submit" class="btn btn-primary login_btn" value="Submit" ng-click="localLogin()"/>
+                <span class="separator">or</span>
+                <a class="btn btn-primary register_btn" href="#/register">Register</a>
+            </div>
+            <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span>Facebook</a>
+            <a href="/auth/twitter" class="btn btn-info"><span class="fa fa-facebook"></span>Twitter</a>
+        </form>
+    </div>
+    <footer-section show-back="true"></footer-section>
+</div>
