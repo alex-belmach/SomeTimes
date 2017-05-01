@@ -5,6 +5,7 @@ function config(app) {
     app.use('/dest', express.static('../client/dest'));
     app.use('/components', express.static('../client/components'));
     app.use('/resources', express.static('../client/resources'));
+    app.use('/styles', express.static('../client/styles'));
 
     app.set('views', '../client/views');
 
