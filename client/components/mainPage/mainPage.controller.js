@@ -9,8 +9,7 @@ app.controller('MainPageCtrl', ['$scope',
                                  'loginService',
                                  ($scope, $http, $timeout, $location, $route, requestService, CONSTANTS, isIEService, loginService) => {
     $scope.hide = {
-        currentSection: true,
-        sectionsList: true,
+        sectionNews: true,
         bookmarks: true,
         spinnerGIF: true,
         spinnerCSS: true,
@@ -19,83 +18,31 @@ app.controller('MainPageCtrl', ['$scope',
         bookmarksHeading: true
     };
 
-    $scope.hideSpinner = (hide, browser = navigator.userAgent) => {
-        if(isIEService.detect(browser)) {
-            $scope.hide.spinnerGIF = hide;
+    $scope.showSection = function(section, isShow) {
+        if (_.isArray(section)) {
+            _.forEach(section, function(showSectionObj) {
+                showOneSection(showSectionObj.name, showSectionObj.isShow);
+            });
+        } else {
+            showOneSection(section, isShow);
         }
-        else {
+    };
+
+    function showOneSection(sectionName, isShow) {
+        if (sectionName === 'spinner') {
+            hideSpinner(!isShow);
+            return;
+        }
+        $scope.hide[sectionName] = !isShow;
+    }
+
+    function hideSpinner(hide) {
+        if(isIEService.detect()) {
+            $scope.hide.spinnerGIF = hide;
+        } else {
             $scope.hide.spinnerCSS = hide;
         }
-    };
-
-    let jsonPromise = requestService.get(CONSTANTS.dataPath);
-    jsonPromise.then(function (response) {
-        $scope.sections = response.data.sections;
-        $scope.sectionsList = $scope.sections.slice(0, $scope.sections.length - 1);
-    });
-
-    $scope.chooseSection = (currentSection = 'Show all sections...') => {
-        $(".select_button").blur();
-        $scope.hideSpinner(false);
-        $scope.hide.bookmarks = true;
-
-        if (currentSection === 'Show all sections...') {
-            $scope.hideSpinner(true);
-            $scope.hide.currentSection = true;
-            $scope.hide.sectionsList = false;
-            $(".logo").addClass("logo_top");
-        }
-        else {
-            $scope.hide.currentSection = false;
-            $scope.hide.sectionsList = true;
-            $scope.url = CONSTANTS.articlesUrl + '?' + $.param({
-                'api-key': CONSTANTS.apiKey,
-                'fq': `news_desk:("${currentSection}")`
-            });
-
-            let promise = requestService.get($scope.url);
-            promise.then(function (response) {
-                $scope.hideSpinner(true);
-                $scope.articles = response.data.response.docs;
-                $scope.articles.forEach(function (current, index) {
-                    if (current.multimedia.length) {
-                        current.gallery = (`${CONSTANTS.commonUrl}${current.multimedia[0].url}`);
-                        current.hideImage = false;
-                    }
-                    else {
-                        current.hideImage = true;
-                    }
-                    current.date = `${current.pub_date.slice(0, 10)}`;
-                    current.author = (current.byline && current.byline.original) ? `${current.byline.original}` : ``;
-
-                    if(loginService.loginInfo.isLogin === true) {
-                        let data = {
-                            username: loginService.getUsername(),
-                            title: current.headline.main
-                        };
-
-                        $http({
-                            url: '/checkIfExists',
-                            method: "POST",
-                            data: { article : data }
-                        })
-                        .then(function(response) {
-                            if(response.data === "Data is already exists") {
-                                current.bookmark = "./resources/min/bookmark_marked.png";
-                            }
-                            else {
-                                current.bookmark = "./resources/min/bookmark.png";
-                            }
-                        },
-                        function(response) {
-                        });
-                    }
-                });
-                $scope.hideSpinner(true);
-                $(".logo").addClass("logo_top");
-            });
-        }
-    };
+    }
 
     $scope.checkIfExists = (article) => {
         let data = {
@@ -125,7 +72,7 @@ app.controller('MainPageCtrl', ['$scope',
     };
 
     $scope.showBookmarks = () => {
-        $scope.hide.currentSection = true;
+        $scope.hide.sectionNews = true;
         $scope.hide.sectionsList = true;
         $scope.hide.bookmarks = false;
         $(".logo").addClass("logo_top");
@@ -166,7 +113,7 @@ app.controller('MainPageCtrl', ['$scope',
     };
 
     $scope.hideAll = () => {
-        $scope.hide.currentSection = true;
+        $scope.hide.sectionNews = true;
         $scope.hide.sectionsList = true;
         $scope.hide.bookmarks = true;
         $(".logo").removeClass("logo_top");

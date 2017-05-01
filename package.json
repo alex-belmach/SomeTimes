@@ -58,8 +58,5 @@
     "passport-http": "^0.3.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4"
-  },
-  "dependencies": {
-    "lodash": "^4.17.4"
   }
 }

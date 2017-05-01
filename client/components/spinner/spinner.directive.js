@@ -5,6 +5,6 @@
             hideGif: '=',
             hideCss: '='
         },
-        templateUrl: '../../components/spinner/spinner.tmpl.html'
+        templateUrl: '/components/spinner/spinner.tmpl.html'
     };
 });

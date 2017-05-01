@@ -1,0 +1,9 @@
+<div class="form-inline text-center">
+    <select ng-model="currentSection" class="form-control"
+            ng-options="section.niceName for section in sectionList" required
+    >
+        <option value="">Choose news section</option>
+    </select>
+    <button ng-click="chooseSection(currentSection)" id="get_news_button"
+            class="btn btn-primary select_button">Get news</button>
+</div>

@@ -1,4 +1,4 @@
-app.service('loginService', function($http) {
+app.service('loginService', ['$http', function($http) {
 	var loginInfo = {
 			username: '',
 			avatarUrl: '',
@@ -80,4 +80,4 @@ app.service('loginService', function($http) {
             url: '/logout'
         });
     }
-});
+}]);
