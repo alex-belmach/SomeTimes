@@ -9,6 +9,7 @@ module.exports = function(app) {
 
     app.get('/currentUser', function(req, res) {
         if (!req.user) {
+            res.send();
             return;
         }
         User.findOne({ username: req.user.username }, function(err, user) {
