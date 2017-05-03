@@ -15,5 +15,5 @@ app.controller('PlayerCtrl', ['$scope', '$rootScope', 'isIEService', function($s
     };
 
     //TODO: uncomment to start player
-    //$scope.setPlayer();
+    $scope.setPlayer();
 }]);

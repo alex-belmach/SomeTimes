@@ -48,10 +48,10 @@ function($http, $q, newsApiService, utilityService, CONSTANTS) {
     }
 
     function toLocalDate(articles) {
-        return _.map(articles, function(article) {
+        _.forEach(articles, function(article) {
             article.publishedAt = new Date(article.publishedAt);
-            return article;
         });
+        return articles;
     }
 
     function sortByLatest(articles) {

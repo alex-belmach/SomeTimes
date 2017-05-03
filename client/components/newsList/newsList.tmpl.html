@@ -1,0 +1,38 @@
+<div class="row news-list col-sm-5" ng-show="isDisplayed">
+    <div class="article" ng-repeat="article in articles | limitTo: articlesLimit">
+        <div class="article_heading">
+            <div class="bookmark_button pull-right" ng-click="addToBookmarks(article)"
+                ng-show="showBookmarkButton"
+            >
+                <img ng-src="{{article.bookmark}}" alt="favorite_icon">
+            </div>
+            <h3 class="article_headline">{{article.title}}</h3>
+        </div>
+        <div class="article_image pull-left" ng-if="article.urlToImage">
+            <img ng-src="{{article.urlToImage}}"/>
+        </div>
+        <div class="article_description">
+            <p>{{article.description}}</p>
+        </div>
+        <div class="clear"></div>
+        <div class="article_footer">
+            <div class="publish_info">
+                <p class="ellipsis" ng-show="article.publishedAtString !== ''">
+                    {{article.publishedAtString}}
+                </p>
+                <p class="ellipsis" ng-show="article.author">{{article.author}}</p>
+                <a ng-href="{{article.hostName}}" class="ellipsis host-link" ng-show="article.hostName">
+                    {{article.hostName}}
+                </a>
+            </div>
+            <a class="more_link btn btn-default pull-right" ng-href="{{article.url}}" target="_blank">
+                Read more...
+            </a>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <button class="btn btn-default btn-more-articles" ng-show="articlesLimit < articles.length"
+            ng-click="increaseLimit()">
+            More news
+    </button>
+</div>

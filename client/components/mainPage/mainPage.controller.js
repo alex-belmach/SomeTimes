@@ -44,6 +44,21 @@ app.controller('MainPageCtrl', ['$scope',
         }
     }
 
+    $scope.showSectionNews = function(articles) {
+        $scope.sectionArticles = articles;
+        $scope.showSection('sectionNews', true);
+        $scope.updateNewsList = true;
+        $(".logo").addClass("logo_top");
+    };
+
+
+
+
+
+
+
+
+
     $scope.checkIfExists = (article) => {
         let data = {
             username: loginService.getUsername(),

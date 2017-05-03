@@ -1,6 +1,7 @@
 <div class="main_page">
     <div class="wrapper">
-        <user-info hide-section="hide.userInfo" show-bookmarks="showBookmarks" hide-all="hideAll"></user-info>
+        <user-info hide-section="hide.userInfo" show-bookmarks="showBookmarks" hide-all="hideAll">
+        </user-info>
         <div class="content">
             <div class="header">
                 <div class="logo">
@@ -10,8 +11,11 @@
             </div>
             <div class="main_section">
                 <div class="page_body container">
-                    <select-section show-section="showSection"></select-section>
-                    <news></news>
+                    <select-section show-section="showSection" show-section-news="showSectionNews">
+                    </select-section>
+                    <news-list is-displayed="!hide.sectionNews" update-news-list="updateNewsList"
+                               articles="sectionArticles">
+                    </news-list>
                     <bookmarks></bookmarks>
                 </div>
             </div>
