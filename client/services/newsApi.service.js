@@ -34,7 +34,7 @@ app.service('newsApiService', ['$http', '$q', 'CONSTANTS', function($http, $q, C
     }
 
     function filterSection(sectionList, section) {
-        return _.filter(sectionList, { category: section });
+        return (section === '') ? sectionList : _.filter(sectionList, { category: section });
     }
 
     function getArticlesBySourceId(sourceId) {
