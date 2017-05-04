@@ -1,7 +1,7 @@
 <div class="row news-list col-sm-5" ng-show="isDisplayed">
     <div class="article" ng-repeat="article in articles | limitTo: articlesLimit">
         <div class="article_heading">
-            <div class="bookmark_button pull-right" ng-click="addToBookmarks(article, $event)"
+            <div class="bookmark_button pull-right" ng-click="toggleBookmark(article, $event)"
                 ng-show="showBookmarkButton"
             >
                 <img ng-src="{{article.bookmarkIcon}}" alt="favorite_icon">

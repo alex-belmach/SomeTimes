@@ -86,7 +86,8 @@ gulp.task('clean', () => {
 gulp.task('watch', () => {
     gulp.watch('client/styles/fonts.css', ['refresh']);
     gulp.watch('client/styles/sass/*.scss', ['sass']);
-    gulp.watch('client/**/*.js', ['babel']);
+    gulp.watch('client/components/**/*.js', ['babel']);
+    gulp.watch('client/services/**/*.js', ['babel']);
     gulp.watch('client/libraries/*.js', ['scripts']);
     gulp.watch('client/libraries/*css', ['styles']);
     gulp.watch('client/resources/*', ['img']);

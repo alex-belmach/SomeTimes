@@ -26,10 +26,13 @@ module.exports = function(app) {
 
     app.post('/deleteFromBookmarks', function(req, res) {
         var username = req.body.article.username;
-        var newsTitle = req.body.article.title;
-        User.deleteAccordingCriteria(username, { $pull: { 'bookmarks': { 'title': newsTitle } } }, function(response) {
-            res.send(response);
-        });
+        var newsUrl = req.body.article.url;
+        User.deleteAccordingCriteria(username, { $pull: { 'bookmarks': { 'url': newsUrl } } },
+            function(response) {
+                res.status(202);
+                res.send(response);
+            }
+        );
     });
 
     app.post('/checkIfExists/:username', function(req, res) {

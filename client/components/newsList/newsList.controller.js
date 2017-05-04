@@ -2,11 +2,15 @@ app.controller('newsListCtrl', ['$scope', 'loginService', 'utilityService', 'boo
 function($scope, loginService, utilityService, bookmarkService) {
     var ARTICLES_DEFAULT_LIMIT = 7;
 
-    $scope.addToBookmarks = function (article, event) {
-        bookmarkService.addBookmark(article);
+    $scope.toggleBookmark = function(article, event) {
+        var element = $(event.target);
 
-        highlightOnAdd(event.target);
-        toggleBookmarkIcon(article);
+        if (isBookmark(article)) {
+            removeFromBookmarks(article, element);
+        } else {
+            addToBookmarks(article, element);
+        }
+        toggleBookmarkIcon(article, element);
     };
 
     $scope.$watch('updateNewsList', function() {
@@ -73,15 +77,38 @@ function($scope, loginService, utilityService, bookmarkService) {
     }
 
     function highlightOnAdd(element) {
-        $(element).addClass("bookmark_add_response");
+        element.addClass("bookmark_add_response");
         setTimeout(function() {
-            $(element).removeClass("bookmark_add_response");
-        }, 1000);
+            element.removeClass("bookmark_add_response");
+        }, 500);
     }
 
-    function toggleBookmarkIcon(article) {
+    function highlightOnRemove(element) {
+        element.addClass("bookmark_delete_response");
+        setTimeout(function() {
+            element.removeClass("bookmark_delete_response");
+        }, 500);
+    }
+
+    function removeFromBookmarks(article, element) {
+        bookmarkService.removeBookmark(article);
+
+        highlightOnRemove(element);
+    }
+
+    function addToBookmarks(article, element) {
+        bookmarkService.addBookmark(article);
+
+        highlightOnAdd(element);
+    }
+
+    function toggleBookmarkIcon(article, element) {
         article.bookmarkIcon = article.bookmarkIcon === '/resources/min/bookmark_marked.png'
                                ? '/resources/min/bookmark.png'
                                : '/resources/min/bookmark_marked.png';
+    }
+
+    function isBookmark(article) {
+        return article.bookmarkIcon === '/resources/min/bookmark_marked.png';
     }
 }]);

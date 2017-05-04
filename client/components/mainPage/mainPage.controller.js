@@ -107,42 +107,5 @@ app.controller('MainPageCtrl', ['$scope',
         $('html,body').scrollTop(0);
     };
 
-    $scope.deleteFromBookmarks = (article) => {
-        let data = {
-            username: loginService.getUsername,
-            title: article.title
-        };
-
-        $http({
-            url: '/deleteFromBookmarks',
-            method: "POST",
-            data: { article : data}
-        })
-        .then(function(response) {
-        },
-        function(response) {
-        });
-
-        let index = 0;
-        for(let i = 0; i < $scope.articles.length; i++) {
-            if($scope.articles[i].title === article.title) {
-                index = i;
-                break;
-            }
-        }
-
-        $(".more_info").addClass("bookmark_delete_response");
-        $timeout(function() {
-            $(".more_info").removeClass("bookmark_delete_response");
-            $scope.articles.splice(index, 1);
-            if($scope.articles.length === 0) {
-                $scope.hide.noBookmarksMsg = false;
-                $scope.hide.bookmarksHeading = true;
-            }
-            else {
-                $scope.hide.noBookmarksMsg = true;
-                $scope.hide.bookmarksHeading = false;
-            }
-        }, 400);
-    };
+    
 }]);
