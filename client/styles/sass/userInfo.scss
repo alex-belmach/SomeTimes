@@ -1,0 +1,114 @@
+.user_info {
+    position: fixed;
+    top: 80%;
+    left: -250px;
+    width: 250px;
+    height: 100px;
+    background-color: rgba(#000, 0.5);
+    z-index: 40;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    color: white;
+    transition: all .5s;
+    padding: 20px 30px;
+    &:hover {
+        left: 0;
+    }
+    .username {
+        max-width: 133px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 18px;
+    }
+    .logout_button {
+        display: inline-block;
+        width: 50px;
+        margin-left: 20px;
+        color: $link;
+        &:hover {
+            color: $link_hover;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+    .avatar_container {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        height: 80px;
+        width: 80px;
+        overflow: hidden;
+        border-radius: 40px;
+        .upload_button {
+            position: absolute;
+            top: 0;
+            left: -80px;
+            width: 80px;
+            height: 80px;
+            background-color: rgba(#000, 0.6);
+            color: white;
+            text-align: center;
+            line-height: 80px;
+            transition: all .5s;
+            span {
+                &:hover {
+                    color: $link_hover;
+                    cursor: pointer;
+                }
+            }
+        }
+        .avatar {
+            width: 100%;
+        }
+        &:hover .upload_button {
+            left: 0;
+        }
+        &:hover + .upload_form {
+            display: block;
+        }
+    }
+    .upload_form {
+        position: relative;
+        background: #ffffff;
+        width: 170px;
+        height: 20px;
+        display: none;
+        position: absolute;
+        top: 90px;
+        left: 113px;
+        border-radius: 5px;
+        input {
+            background-color: #444951;
+            border: none;
+            color: white;
+            border-radius: 3px;
+            padding: 0;
+        }
+        &:hover {
+            display: block;
+        }
+    }
+    .upload_form:after {
+        bottom: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: #444951;
+        border-width: 10px;
+        margin-left: -10px;
+        &:hover .upload_form {
+            display: block;
+        }
+    }
+    .bookmark_button {
+        display: inline-block;
+    }
+}
+
+.user_info_slided {
+    left: -155px;
+}
