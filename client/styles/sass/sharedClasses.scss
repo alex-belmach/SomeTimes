@@ -1,0 +1,34 @@
+$light-green-color:   #a3f7b9;
+$light-red-color:     #ff7a85;
+$light-grey-color:    #ccc;
+$white-color:         #fff;
+
+.bookmark_button {
+    cursor: pointer;
+    width: 31px;
+    height: 31px;
+    border-radius: 50%;
+    line-height: 31px;
+    background-color: $white-color;
+    text-align: center;
+    transition: background-color 1s ease;
+    img {
+        width: 20px;
+        height: 20px;
+        pointer-events: none;
+    }
+    &:hover {
+        background-color: $light-grey-color;
+    }
+}
+
+.bookmark_add_response,
+.bookmark_add_response:hover {
+    background-color: $light-green-color;
+    transition: none;
+}
+
+.bookmark_delete_response,
+.bookmark_delete_response:hover {
+    background-color: $light-red-color;
+}

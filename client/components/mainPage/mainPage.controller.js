@@ -51,40 +51,20 @@ app.controller('MainPageCtrl', ['$scope',
         $(".logo").addClass("logo_top");
     };
 
-
-
-
-
-
-
-
-
-    $scope.checkIfExists = (article) => {
-        let data = {
-            username: loginService.getUsername(),
-            title: article.headline.main
-        };
-
-        $scope.isExists = false;
-
-        $http({
-            url: '/checkIfExists',
-            method: "POST",
-            data: { article : data}
-        })
-        .then(function(response) {
-            if(response.data === "Data is already exists") {
-                console.log("exists");
-                $scope.isExists = true;
-            }
-            else {
-                console.log("not exists");
-                $scope.isExists = false;
-            }
-        },
-        function(response) {
-        });
+    $scope.hideAll = () => {
+        $scope.showSection([
+            { name: 'sectionNews', isShow: false },
+            { name: 'sectionList', isShow: false },
+            { name: 'bookmarks', isShow: false }
+        ]);
+        $(".logo").removeClass("logo_top");
     };
+
+
+
+
+
+
 
     $scope.showBookmarks = () => {
         $scope.hide.sectionNews = true;
@@ -125,43 +105,6 @@ app.controller('MainPageCtrl', ['$scope',
 
     $scope.toTop = () => {
         $('html,body').scrollTop(0);
-    };
-
-    $scope.hideAll = () => {
-        $scope.hide.sectionNews = true;
-        $scope.hide.sectionsList = true;
-        $scope.hide.bookmarks = true;
-        $(".logo").removeClass("logo_top");
-    };
-
-    $scope.addToBookmarks = (article) => {
-        let data = {
-            username: loginService.getUsername(),
-            web_url: article.web_url,
-            gallery: article.gallery,
-            date: article.date,
-            author: article.author,
-            title: article.headline.main,
-            lead_paragraph: article.lead_paragraph
-        };
-
-        $http({
-            url: '/addToBookmarks',
-            method: "POST",
-            data: { article : data}
-        })
-        .then(function(response) {
-            if(response.status === "203") {
-
-            }
-        },
-        function(response) {
-        });
-
-        $(".more_info").addClass("bookmark_add_response");
-        setTimeout(function() {
-            $(".more_info").removeClass("bookmark_add_response");
-        }, 400);
     };
 
     $scope.deleteFromBookmarks = (article) => {

@@ -1,10 +1,10 @@
 <div class="row news-list col-sm-5" ng-show="isDisplayed">
     <div class="article" ng-repeat="article in articles | limitTo: articlesLimit">
         <div class="article_heading">
-            <div class="bookmark_button pull-right" ng-click="addToBookmarks(article)"
+            <div class="bookmark_button pull-right" ng-click="addToBookmarks(article, $event)"
                 ng-show="showBookmarkButton"
             >
-                <img ng-src="{{article.bookmark}}" alt="favorite_icon">
+                <img ng-src="{{article.bookmarkIcon}}" alt="favorite_icon">
             </div>
             <h3 class="article_headline">{{article.title}}</h3>
         </div>

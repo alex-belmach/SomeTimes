@@ -1,38 +1,26 @@
 var User     = require('../models/userModel.js');
+var _        = require('lodash');
 
 module.exports = function(app) {
     app.post('/addToBookmarks', function(req, res) {
         var username = req.body.article.username;
-        var temp = {
-            web_url: req.body.article.web_url,
-            gallery: req.body.article.gallery,
-            date: req.body.article.date,
-            author: req.body.article.author,
-            title: req.body.article.title,
-            lead_paragraph: req.body.article.lead_paragraph
-        };
+        var temp = _.cloneDeep(req.body.article);
 
         User.getUserByUsername(username, function(err, user) {
             if(err) {
                 throw err;
             }
-            var isSame = false;
-            for(var i = 0; i < user.bookmarks.length; i++) {
-                if(user.bookmarks[i].title === temp.title) {
-                    isSame = true;
-                    res.status(203);
-                    res.send("Data is already exists");
-                    return;
-                }
+
+            if (_.some(user.bookmarks, { url: temp.url })) {
+                res.status(202);
+                res.send("Article has been already in bookmarks");
+                return;
             }
 
-            if(isSame === false) {
-                user.bookmarks.push(temp);
-                user.save(function() {
-                });
-                res.status(201);
-                res.send("Data was added successfully");
-            }
+            user.bookmarks.push(temp);
+            user.save();
+            res.status(202);
+            res.send("Article was added to bookmarks");
         });
     });
 
@@ -44,28 +32,23 @@ module.exports = function(app) {
         });
     });
 
-    app.post('/checkIfExists', function(req, res) {
-        var username = req.body.article.username;
-        var title = req.body.article.title;
+    app.post('/checkIfExists/:username', function(req, res) {
+        var username = req.params.username;
+        var urlsArray = req.body.urls;
 
         User.getUserByUsername(username, function(err, user) {
             if(err) {
                 throw err;
             }
-            var isExists = false;
-            for(var i = 0; i < user.bookmarks.length; i++) {
-                if(user.bookmarks[i].title === title) {
-                    isExists = true;
-                    res.status(200);
-                    res.send("Data is already exists");
-                    return;
-                }
-            }
 
-            if(isExists === false) {
-                res.status(200);
-                res.send("Data is not exists");
-            }
+            var existArray = _.map(urlsArray, function(url) {
+                return _.some(user.bookmarks, function(bookmark) {
+                    return bookmark.url === url;
+                });
+            });
+
+            res.status(200);
+            res.send(existArray);
         });
     });
 

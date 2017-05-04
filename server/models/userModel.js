@@ -21,12 +21,13 @@ var UserSchema = mongoose.Schema({
 		index: true
 	},
 	bookmarks: [{
-		web_url: String,
-		gallery: String,
-		date: String,
+		url: String,
+		urlToImage: String,
+		publishedAt: String,
 		author: String,
 		title: String,
-		lead_paragraph: String
+		description: String,
+		hostName: String
 	}],
 	facebook: {
 		id: String,
