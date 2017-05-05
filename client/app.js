@@ -3,16 +3,16 @@ let app = angular.module('app', ['ngRoute']);
 app.config(function($routeProvider) {
     $routeProvider
     .when('/', {
-        templateUrl: '../../components/mainPage/mainPage.tmpl.html',
-        controller: 'MainPageCtrl'
+        templateUrl: '/components/mainPage/mainPage.tmpl.html',
+        controller: 'mainPageCtrl'
     })
     .when('/login', {
-        templateUrl: '../../components/loginPage/loginPage.tmpl.html',
-        controller: 'LoginPageCtrl'
+        templateUrl: '/components/loginPage/loginPage.tmpl.html',
+        controller: 'loginPageCtrl'
     })
     .when('/register', {
-        templateUrl: '../../components/registerPage/registerPage.tmpl.html',
-        controller: 'RegisterPageCtrl'
+        templateUrl: '/components/registerPage/registerPage.tmpl.html',
+        controller: 'registerPageCtrl'
     })
     .otherwise({ redirectTo: '/'});
 });
