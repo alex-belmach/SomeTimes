@@ -1,7 +1,9 @@
 app.service('utilityService', function() {
     return {
         dateCompareFunction: dateCompareFunction,
-        getHostName: getHostName
+        getHostName: getHostName,
+        sortByLatest: sortByLatest,
+        scrollPageToTop: scrollPageToTop
     };
 
     function dateCompareFunction(firstDate, secondDate) {
@@ -21,5 +23,15 @@ app.service('utilityService', function() {
                 return null;
             }
         }
+    }
+
+    function sortByLatest(articles) {
+        return articles.sort(function(firstArticle, secondArticle) {
+            return dateCompareFunction(firstArticle.publishedAt, secondArticle.publishedAt);
+        });
+    }
+
+    function scrollPageToTop() {
+        $('html,body').scrollTop(0);
     }
 });

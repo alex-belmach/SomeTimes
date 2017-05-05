@@ -1,5 +1,5 @@
-app.controller('newsListCtrl', ['$scope', 'loginService', 'utilityService', 'bookmarkService',
-function($scope, loginService, utilityService, bookmarkService) {
+app.controller('newsListCtrl', ['$scope', 'loginService', 'utilityService', 'bookmarkService', '$timeout',
+function($scope, loginService, utilityService, bookmarkService, $timeout) {
     var ARTICLES_DEFAULT_LIMIT = 7;
 
     $scope.toggleBookmark = function(article, event) {
@@ -30,21 +30,26 @@ function($scope, loginService, utilityService, bookmarkService) {
 
     function updateArticlesData(firstIndex, lastIndex) {
         lastIndex = _.min([lastIndex, $scope.articles.length - 1]);
-        var bookmarkCheckArray = [];
-        for (var i = firstIndex; i <= lastIndex; i++) {
-            var article = $scope.articles[i];
-            beautifyPublishDate(article);
-            beautifySourceHost(article);
-            beautifyAuthorName(article);
-            bookmarkCheckArray.push(article);
+        if ($scope.isBookmarkList) {
+            markBookmarks(firstIndex, lastIndex);
+        } else {
+            var bookmarkCheckArray = [];
+            for (var i = firstIndex; i <= lastIndex; i++) {
+                var article = $scope.articles[i];
+                beautifyPublishDate(article);
+                beautifySourceHost(article);
+                beautifyAuthorName(article);
+                bookmarkCheckArray.push(article);
+            }
+            checkBookmarks(bookmarkCheckArray);
         }
-        checkBookmarks(bookmarkCheckArray);
     }
 
     function checkBookmarks(bookmarkCheckArray) {
         if (!$scope.showBookmarkButton) {
             return;
         }
+
         var urlsArray = _.map(bookmarkCheckArray, function(article) {
             return article.url;
         });
@@ -53,6 +58,12 @@ function($scope, loginService, utilityService, bookmarkService) {
             .then(function(ifExistsArray) {
                 beautifyBookmarks(bookmarkCheckArray, ifExistsArray);
             });
+    }
+
+    function markBookmarks(firstIndex, lastIndex) {
+        for (var i = firstIndex; i <= lastIndex; i++) {
+            $scope.articles[i].bookmarkIcon = '/resources/min/bookmark_marked.png';
+        }
     }
 
     function beautifyBookmarks(articles, ifExistsArray) {
@@ -77,16 +88,16 @@ function($scope, loginService, utilityService, bookmarkService) {
     }
 
     function highlightOnAdd(element) {
-        element.addClass("bookmark_add_response");
-        setTimeout(function() {
-            element.removeClass("bookmark_add_response");
+        element.addClass('bookmark_add_response');
+        $timeout(function() {
+            element.removeClass('bookmark_add_response');
         }, 500);
     }
 
     function highlightOnRemove(element) {
-        element.addClass("bookmark_delete_response");
-        setTimeout(function() {
-            element.removeClass("bookmark_delete_response");
+        element.addClass('bookmark_delete_response');
+        $timeout(function() {
+            element.removeClass('bookmark_delete_response');
         }, 500);
     }
 
@@ -94,6 +105,11 @@ function($scope, loginService, utilityService, bookmarkService) {
         bookmarkService.removeBookmark(article);
 
         highlightOnRemove(element);
+        if ($scope.isBookmarkList) {
+            $timeout(function() {
+                _.pull($scope.articles, article);
+            }, 501);
+        }
     }
 
     function addToBookmarks(article, element) {

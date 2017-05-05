@@ -1,6 +1,10 @@
 app.directive('bookmarks', function () {
     return {
         restrict: 'E',
-        templateUrl: '../../components/bookmarks/bookmarks.tmpl.html'
+        scope: {
+            isDisplayed: '='
+        },
+        templateUrl: '/components/bookmarks/bookmarks.tmpl.html',
+        controller: 'bookmarksCtrl'
     };
 });

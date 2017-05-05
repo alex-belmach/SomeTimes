@@ -2,7 +2,8 @@ app.service('bookmarkService', ['$http', 'loginService', function($http, loginSe
     return {
         checkIfExists: checkIfExists,
         addBookmark: addBookmark,
-        removeBookmark: removeBookmark
+        removeBookmark: removeBookmark,
+        getBookmarks: getBookmarks
     };
 
     function checkIfExists(urlsArray) {
@@ -59,28 +60,20 @@ app.service('bookmarkService', ['$http', 'loginService', function($http, loginSe
                 throw new Error('Error during deleting from bookmarks');
             }
         });
+    }
 
-        // TODO: move this logic to bookmarks page
-        // let index = 0;
-        // for(let i = 0; i < $scope.articles.length; i++) {
-        //     if($scope.articles[i].title === article.title) {
-        //         index = i;
-        //         break;
-        //     }
-        // }
-        //
-        // $(".more_info").addClass("bookmark_delete_response");
-        // $timeout(function() {
-        //     $(".more_info").removeClass("bookmark_delete_response");
-        //     $scope.articles.splice(index, 1);
-        //     if($scope.articles.length === 0) {
-        //         $scope.hide.noBookmarksMsg = false;
-        //         $scope.hide.bookmarksHeading = true;
-        //     }
-        //     else {
-        //         $scope.hide.noBookmarksMsg = true;
-        //         $scope.hide.bookmarksHeading = false;
-        //     }
-        // }, 400);
+    function getBookmarks() {
+        let url = '/getBookmarks' + '/' + loginService.getUsername();
+
+        return $http({
+            method: 'GET',
+            url: url
+        })
+        .then(function(response) {
+            if (response.status !== 202) {
+                throw new Error('Error during getting bookmarks');
+            }
+            return _.reverse(response.data.bookmarks);
+        });
     }
 }]);

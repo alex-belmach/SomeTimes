@@ -13,7 +13,11 @@ module.exports = function(app) {
             return;
         }
         User.findOne({ username: req.user.username }, function(err, user) {
-            res.send(user);
+            var response = {
+                username: user.username,
+                avatarurl: user.avatarurl
+            };
+            res.send(response);
         });
     });
 

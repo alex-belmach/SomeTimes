@@ -27,7 +27,7 @@ function($http, $q, newsApiService, utilityService, CONSTANTS) {
         return newsApiService.getSectionSources(selectedSection)
             .then(getSectionArticles)
             .then(toLocalDate)
-            .then(sortByLatest)
+            .then(utilityService.sortByLatest)
             .then(function(articles) {
                 return articles;
             });
@@ -52,11 +52,5 @@ function($http, $q, newsApiService, utilityService, CONSTANTS) {
             article.publishedAt = new Date(article.publishedAt);
         });
         return articles;
-    }
-
-    function sortByLatest(articles) {
-        return articles.sort(function(firstArticle, secondArticle) {
-            return utilityService.dateCompareFunction(firstArticle.publishedAt, secondArticle.publishedAt);
-        });
     }
 }]);

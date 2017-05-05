@@ -24,6 +24,7 @@ var UserSchema = mongoose.Schema({
 		url: String,
 		urlToImage: String,
 		publishedAt: String,
+		publishedAtString: String,
 		author: String,
 		title: String,
 		description: String,

@@ -4,9 +4,13 @@ app.directive('newsList', function () {
         scope: {
             articles: '=',
             isDisplayed: '=',
-            updateNewsList: '='
+            updateNewsList: '=',
+            isBookmarkList: '=?'
         },
         templateUrl: '/components/newsList/newsList.tmpl.html',
-        controller: 'newsListCtrl'
+        controller: 'newsListCtrl',
+        link: function(scope) {
+            scope.isBookmarkList = scope.isBookmarkList || false;
+        }
     };
 });
