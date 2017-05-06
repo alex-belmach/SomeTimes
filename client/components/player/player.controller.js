@@ -3,7 +3,7 @@
 
     playerCtrl.$inject = [
         '$scope',
-        'isIEService'
+        'browserService'
     ];
 
     angular
@@ -12,10 +12,10 @@
 
     function playerCtrl(
         $scope,
-        isIEService
+        browserService
     ) {
         $scope.setPlayer = function(browser = navigator.userAgent) {
-            if (!device.tablet() && !device.mobile() && !isIEService.detect(browser)) {
+            if (!device.tablet() && !device.mobile() && !browserService.isIE(browser)) {
                 $(".player").mb_YTPlayer({
                 videoURL:'https://www.youtube.com/watch?v=-ILqHSH4X_w',
                 autoPlay:true,

@@ -3,7 +3,7 @@
 
     mainPageCtrl.$inject = [
         '$scope',
-        'isIEService',
+        'browserService',
         'utilityService'
     ];
 
@@ -13,7 +13,7 @@
 
     function mainPageCtrl(
         $scope,
-        isIEService,
+        browserService,
         utilityService
     ) {
         $scope.hide = {
@@ -43,7 +43,7 @@
         }
 
         function hideSpinner(hide) {
-            if(isIEService.detect()) {
+            if(browserService.isIE()) {
                 $scope.hide.spinnerGIF = hide;
             } else {
                 $scope.hide.spinnerCSS = hide;
