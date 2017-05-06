@@ -81,9 +81,24 @@
         }
 
         function markBookmarks(firstIndex, lastIndex) {
-            for (var i = firstIndex; i <= lastIndex; i++) {
-                $scope.articles[i].bookmarkIcon = '/resources/min/bookmark_marked.png';
+            if (_.isUndefined(lastIndex)) {
+                markOneBookmark(firstIndex);
+                return;
             }
+            for (var i = firstIndex; i <= lastIndex; i++) {
+                if (!markOneBookmark(i)) {
+                    return;
+                }
+            }
+        }
+
+        function markOneBookmark(index) {
+            var article = $scope.articles[index];
+            if (!_.isUndefined(article)) {
+                article.bookmarkIcon = '/resources/min/bookmark_marked.png';
+                return true;
+            }
+            return false;
         }
 
         function beautifyBookmarks(articles, ifExistsArray) {
@@ -126,6 +141,7 @@
 
             highlightOnRemove(element);
             if ($scope.isBookmarkList) {
+                markBookmarks(ARTICLES_DEFAULT_LIMIT);
                 $timeout(function() {
                     _.pull($scope.articles, article);
                 }, 501);

@@ -1,10 +1,10 @@
 <div class="row" ng-show="isDisplayed">
-    <div class="sub_heading_container" ng-show="showList">
+    <div class="sub_heading_container" ng-show="bookmarkArticles.length > 0">
         <h2 class="sub_heading">Bookmarks</h2>
     </div>
-    <div class="no_bookmarks_msg" ng-show="showNoBookmarks">
+    <div class="no_bookmarks_msg" ng-show="bookmarkArticles.length === 0">
         <h2 class="sub_heading">No added bookmarks yet</h2>
     </div>
-    <news-list is-displayed="showList" update-news-list="updateList"
+    <news-list is-displayed="bookmarkArticles.length > 0" update-news-list="updateList"
                articles="bookmarkArticles" is-bookmark-list="true">
 </div>

@@ -24,12 +24,6 @@
         function updateBookmarkList(bookmarks) {
             $scope.bookmarkArticles = bookmarks;
             $scope.updateList = true;
-            updateView();
-        }
-
-        function updateView() {
-            $scope.showList = $scope.bookmarkArticles.length > 0;
-            $scope.showNoBookmarks = !$scope.showHeading;
         }
     }
 })();
