@@ -14,6 +14,7 @@ var express              = require('express'),
     passportConfig       = require('./config/passportConfig.js'),
     loginRoutes          = require('./routes/loginRoutes.js'),
     bookmarksRoutes      = require('./routes/bookmarksRoutes.js'),
+    analysisRoutes       = require('./routes/analysisRoutes.js'),
     app;
 
 app = express();
@@ -54,6 +55,7 @@ app = serverConfig(app);
 app = serverPathConfig(app);
 app = loginRoutes(app);
 app = bookmarksRoutes(app);
+app = analysisRoutes(app);
 
 app.listen(app.get('port'), function() {
   console.log('Server started on port 5555. Press Ctrl-C to terminate...');
