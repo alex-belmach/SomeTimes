@@ -6,7 +6,8 @@
         '$timeout',
         'loginService',
         'utilityService',
-        'bookmarkService'
+        'bookmarkService',
+        'analysisService'
     ];
 
     angular
@@ -18,7 +19,8 @@
         $timeout,
         loginService,
         utilityService,
-        bookmarkService
+        bookmarkService,
+        analysisService
     ) {
         var ARTICLES_DEFAULT_LIMIT = 7;
 
@@ -31,6 +33,10 @@
                 addToBookmarks(article, element);
             }
             toggleBookmarkIcon(article, element);
+        };
+
+        $scope.analyseArticle = function(article) {
+            analysisService.addArticle(article);
         };
 
         $scope.$watch('updateNewsList', function() {

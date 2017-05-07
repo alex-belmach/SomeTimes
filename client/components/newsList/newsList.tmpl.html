@@ -25,7 +25,8 @@
                     {{article.hostName}}
                 </a>
             </div>
-            <a class="more_link btn btn-default pull-right" ng-href="{{article.url}}" target="_blank">
+            <a class="more_link btn btn-default pull-right" ng-href="{{article.url}}" target="_blank"
+               ng-click="analyseArticle(article)">
                 Read more...
             </a>
         </div>
