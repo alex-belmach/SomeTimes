@@ -20,7 +20,9 @@
             weightCache,
             documents = [],
             keyWordList = [],
-            KEY_WORDS_NUM = 5;
+            KEY_WORDS_NUM = 5,
+            TITLE_MULTIPLIER = 1.5,
+            DESCRIPTION_MULTIPLIER = 0.75;
 
         return {
             addArticle: addArticle
@@ -33,11 +35,11 @@
             $q.all([addTitle, addDescription])
                 .then(resetKeyWordList)
                 .then(analyse)
+                .then(applyWordMultipliers)
                 .then(cleanUp)
                 .then(console.log);
         }
 
-        //TODO: add priority
         function addString(string) {
             return buildDocument(string)
                 .then(addDocument);
@@ -51,7 +53,7 @@
                 .then(countWords);
         }
 
-        function analyse() {
+        function analyse(keyWordList) {
             weightCache = {};
             _.forEach(keyWordList, function(keyWordObj) {
                 keyWordObj.value = _.reduce(documents, function(keyWordWeight, document) {
@@ -59,16 +61,53 @@
                                             ? getWordWeightInDocument(keyWordObj.word, document)
                                             : 0);
                 }, 0);
-                keyWordObj.value = _.round(keyWordObj.value, 4);
             });
             return keyWordList;
         }
 
-        function cleanUp(keyWordList) {
-            keyWordList.sort(function(first, second) {
-                return first.value - second.value;
+        function applyWordMultipliers(keyWordList) {
+            var wordsArray = _.map(keyWordList, function(keyWordObj) {
+                return keyWordObj.word;
             });
-            keyWordList = _.slice(keyWordList, 0, KEY_WORDS_NUM);
+            return $http({
+                method: 'POST',
+                url: '/getWordsWeightMultipliers',
+                data: { words: wordsArray }
+            }).then(function(response) {
+                if (response.status !== 200) {
+                    throw new Error('Error while getting words weight multipliers');
+                }
+
+                var weightMultipliers = response.data;
+                _.forEach(keyWordList, function(keyWordObj, index) {
+                    keyWordObj.multiplier *= weightMultipliers[index];
+                });
+
+                return keyWordList;
+            });
+        }
+
+        function cleanUp(keyWordList) {
+            var groupedKeyWordList = _.groupBy(keyWordList, function(keyWordObj) {
+                return _.toLower(keyWordObj.word);
+            });
+
+            keyWordList = [];
+
+            _.forOwn(groupedKeyWordList, function(wordArray, word) {
+                var minMultiplier = 10,
+                    wordValue = _.reduce(wordArray, function(sum, currentObj) {
+                        minMultiplier = _.min([minMultiplier, currentObj.multiplier]);
+                        return sum + currentObj.value;
+                    }, 0),
+                    finalValue = _.round(wordValue * minMultiplier, 4);
+                keyWordList.push({ word: word, value: finalValue });
+            });
+
+            keyWordList.sort(function(first, second) {
+                return second.value - first.value;
+            });
+            //keyWordList = _.slice(keyWordList, 0, KEY_WORDS_NUM);
 
             return keyWordList;
         }
@@ -97,11 +136,16 @@
 
         function resetKeyWordList() {
             keyWordList = [];
-            _.forEach(documents, function(document) {
-                _.forEach(_.keys(document), function(word) {
-                    keyWordList.push({ word: word, value: 0 });
+            _.forEach(documents, function(document, index) {
+                var positionMultiplier = (index % 2) ? DESCRIPTION_MULTIPLIER : TITLE_MULTIPLIER;
+                _.forEach(_.keys(document), function(documentWord) {
+                    var existingKeyWord = _.find(keyWordList, { word: documentWord });
+                    if (!existingKeyWord) {
+                        keyWordList.push({ word: documentWord, value: 0, multiplier: positionMultiplier });
+                    }
                 });
             });
+            return keyWordList;
         }
 
         function addDocument(document) {
@@ -118,7 +162,7 @@
 
         function tokenizeString(string) {
             var pattern = /[^A-Za-zА-Яа-я0-9_]+/,
-                results = _.split(_.toLower(string), pattern);
+                results = _.split(string, pattern);
             return _.without(results,'',' ');
         }
 
@@ -126,7 +170,7 @@
             return getStopWords()
                     .then(function(stopWords) {
                         return _.filter(stringWords, function(word) {
-                            return !_.includes(stopWords, word);
+                            return !_.includes(stopWords, _.toLower(word));
                         });
                     });
         }

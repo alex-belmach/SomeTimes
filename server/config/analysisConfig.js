@@ -18,7 +18,7 @@ module.exports = {
         },
         {
             tag: 'FW',
-            multiplier: 1
+            multiplier: 0.9
         },
         {
             tag: 'IN',
@@ -26,15 +26,15 @@ module.exports = {
         },
         {
             tag: 'JJ',
-            multiplier: 0.75
+            multiplier: 0.5
         },
         {
             tag: 'JJR',
-            multiplier: 0.75
+            multiplier: 0.5
         },
         {
             tag: 'JJS',
-            multiplier: 0.8
+            multiplier: 0.6
         },
         {
             tag: 'LS',
@@ -46,19 +46,19 @@ module.exports = {
         },
         {
             tag: 'NN',
-            multiplier: 1
+            multiplier: 1.1
         },
         {
             tag: 'NNP',
-            multiplier: 1.5
+            multiplier: 2
         },
         {
             tag: 'NNPS',
-            multiplier:  1.5
+            multiplier:  2
         },
         {
             tag: 'NNS',
-            multiplier: 1
+            multiplier: 1.1
         },
         {
             tag: 'POS',
@@ -74,19 +74,19 @@ module.exports = {
         },
         {
             tag: 'PRP',
-            multiplier: 0.6
+            multiplier: 0.3
         },
         {
             tag: 'RB',
-            multiplier: 0.7
+            multiplier: 0.55
         },
         {
             tag: 'RBR',
-            multiplier: 0.7
+            multiplier: 0.55
         },
         {
             tag: 'RBS',
-            multiplier: 0.7
+            multiplier: 0.6
         },
         {
             tag: 'RP',
@@ -106,27 +106,27 @@ module.exports = {
         },
         {
             tag: 'VB',
-            multiplier: 1
+            multiplier: 0.5
         },
         {
             tag: 'VBD',
-            multiplier: 1
+            multiplier: 0.5
         },
         {
             tag: 'VBG',
-            multiplier: 1
+            multiplier: 0.5
         },
         {
             tag: 'VBN',
-            multiplier: 1
+            multiplier: 0.5
         },
         {
             tag: 'VBP',
-            multiplier: 1
+            multiplier: 0.5
         },
         {
             tag: 'VBZ',
-            multiplier: 1
+            multiplier: 0.5
         },
         {
             tag: 'WDT',
