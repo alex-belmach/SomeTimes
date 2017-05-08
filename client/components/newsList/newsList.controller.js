@@ -22,7 +22,7 @@
         bookmarkService,
         analysisService
     ) {
-        var ARTICLES_DEFAULT_LIMIT = 7;
+        var ARTICLES_DEFAULT_LIMIT = 12;
 
         $scope.toggleBookmark = function(article, event) {
             var element = $(event.target);
