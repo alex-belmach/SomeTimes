@@ -4,6 +4,7 @@
     analysisService.$inject = [
         '$http',
         '$q',
+        'loginService',
         'CONSTANTS'
     ];
 
@@ -14,16 +15,20 @@
     function analysisService(
         $http,
         $q,
+        loginService,
         CONSTANTS
     ) {
         var stopWords,
             weightCache,
+            analysisCount = 0,
             documents = [],
             keyWordList = [],
             KEY_WORDS_NUM = 5,
             TITLE_MULTIPLIER = 1.5,
             DESCRIPTION_MULTIPLIER = 0.75,
-            PROPER_NOUN_MULTIPLIER = 1.6;
+            PROPER_NOUN_MULTIPLIER = 1.6,
+            MAX_DOCUMENT_COUNT = 20,
+            ANALYSIS_FREQUENCY = 3;
 
         return {
             addArticle: addArticle
@@ -34,11 +39,21 @@
                 addDescription = addString(article.description);
 
             $q.all([addTitle, addDescription])
+                .then(saveDocuments)
+                .then(checkAnalysisFrequency)
                 .then(resetKeyWordList)
                 .then(analyse)
                 .then(applyWordMultipliers)
                 .then(cleanUp)
-                .then(console.log);
+                .then(console.log)
+                .catch(handleError);
+        }
+
+        function handleError(err) {
+            if (err === 'Not time for analysis') {
+                return true;
+            }
+            throw new Error(err);
         }
 
         function addString(string) {
@@ -52,6 +67,40 @@
                 .then(removeStopWords)
                 .then(removeNumbers)
                 .then(countWords);
+        }
+
+        function saveDocuments() {
+            checkDocumentsCount();
+            if (loginService.isLoggedIn()) {
+                $http({
+                    method: 'POST',
+                    url: '/saveDocuments/',
+                    data: { documents: JSON.stringify(documents), username: loginService.getUsername() }
+                }).then(function(response) {
+                    if (response.status !== 202) {
+                        throw new Error('Error while saving documents');
+                    }
+                });
+            }
+
+            return $q.when(true);
+        }
+
+        function checkAnalysisFrequency() {
+            analysisCount++;
+
+            if (analysisCount >= ANALYSIS_FREQUENCY) {
+                analysisCount = 0;
+                return true;
+            }
+
+            return $q.reject('Not time for analysis');
+        }
+
+        function checkDocumentsCount() {
+            while (documents.length > MAX_DOCUMENT_COUNT) {
+                documents = _.drop(documents, 2);
+            }
         }
 
         function analyse(keyWordList) {
@@ -108,7 +157,7 @@
             keyWordList.sort(function(first, second) {
                 return second.value - first.value;
             });
-            //keyWordList = _.slice(keyWordList, 0, KEY_WORDS_NUM);
+            keyWordList = _.slice(keyWordList, 0, KEY_WORDS_NUM);
 
             return keyWordList;
         }

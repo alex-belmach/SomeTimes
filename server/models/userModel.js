@@ -20,6 +20,9 @@ var UserSchema = mongoose.Schema({
 		type: String,
 		index: true
 	},
+	documents: {
+		type: String
+	},
 	bookmarks: [{
 		url: String,
 		urlToImage: String,

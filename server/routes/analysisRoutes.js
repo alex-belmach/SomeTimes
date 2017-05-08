@@ -1,3 +1,4 @@
+var User     = require('../models/userModel.js');
 var pos         = require('pos');
 var _           = require('lodash');
 var multipliers = require('../config/analysisConfig.js').multipliers;
@@ -29,6 +30,22 @@ module.exports = function(app) {
 
         res.status(200);
         res.send(multiplierArray);
+    });
+
+    app.post('/saveDocuments/', function(req, res) {
+        var username = req.body.username;
+        var documentsArray = req.body.documents;
+
+        User.getUserByUsername(username, function(err, user) {
+            if(err) {
+                throw err;
+            }
+
+            user.documents = documentsArray;
+            user.save();
+            res.status(202);
+            res.send();
+        });
     });
 
     return app;
