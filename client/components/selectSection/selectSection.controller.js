@@ -20,6 +20,10 @@
         });
 
         $scope.chooseSection = function() {
+            if (_.isUndefined($scope.currentSection)) {
+                return;
+            }
+
             $("#get_news_button").blur();
             $scope.showSection([
                 { name: 'spinner', isShow: true },
