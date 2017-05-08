@@ -23,6 +23,7 @@
             analysisCount = 0,
             documents = [],
             keyWordList = [],
+            requestPromise,
             KEY_WORDS_NUM = 5,
             TITLE_MULTIPLIER = 1.5,
             DESCRIPTION_MULTIPLIER = 0.75,
@@ -31,7 +32,8 @@
 
         return {
             addArticle: addArticle,
-            restoreDocuments: restoreDocuments
+            restoreDocuments: restoreDocuments,
+            getKeyWords: getKeyWords
         };
 
         function addArticle(article) {
@@ -46,12 +48,25 @@
         }
 
         function restoreDocuments(username) {
-            return $http({
+            requestPromise = $http({
                 method: 'GET',
                 url: '/getDocuments/' + username
             }).then(function(response) {
                 documents = JSON.parse(response.data.documents);
-            }).then(performAnalysis);
+            }).then(performAnalysis)
+            .finally(function() {
+                requestPromise = null;
+            });
+
+            return requestPromise;
+        }
+
+        function getKeyWords() {
+            if (requestPromise) {
+                return requestPromise;
+            }
+
+            return $q.when(keyWordList);
         }
 
         function performAnalysis() {
@@ -61,10 +76,14 @@
                         .then(analyse)
                         .then(applyWordMultipliers)
                         .then(cleanUp)
-                        .then(console.log);
+                        .then(saveKeyWordList);
             }
 
             return $q.when();
+        }
+
+        function saveKeyWordList(wordList) {
+            keyWordList = _.cloneDeep(wordList);
         }
 
         function handleError(err) {

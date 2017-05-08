@@ -1,0 +1,8 @@
+<div ng-show="!!currentArticle" class="recommended-article">
+    <h3 class="title ellipsis">{{currentArticle.title}}</h3>
+    <img ng-src="{{currentArticle.imageUrl}}" class="image pull-left"/>
+    <p class="description">{{currentArticle.description}}</p>
+    <a class="more_link btn btn-default pull-right" ng-href="{{currentArticle.url}}" target="_blank">
+        Read more...
+    </a>
+</div>

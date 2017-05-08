@@ -19,7 +19,8 @@
             scope: {
                 hideSection: '=',
                 showBookmarks: '=',
-                hideAll: '='
+                hideAll: '=',
+                loggedIn: '='
             },
             templateUrl: '/components/userInfo/userInfo.tmpl.html',
             controller: 'userInfoCtrl',
@@ -31,7 +32,9 @@
                            $(".user_info").addClass("user_info_slided");
                         }, 400);
 
-                        analysisService.restoreDocuments(username);
+                        analysisService.restoreDocuments(username).then(function() {
+                            scope.loggedIn = true;
+                        });
                     }
                     else {
                         scope.hideSection = true;

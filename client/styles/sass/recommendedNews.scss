@@ -1,0 +1,44 @@
+$white-color: #fff;
+
+$font-size: 14px;
+$line-height: 1;
+$lines-to-show: 4;
+
+.recommended-article {
+    position: fixed;
+    right: 25px;
+    top: 25px;
+    width: 350px;
+    height: 130px;
+    padding: 10px;
+    border-radius: 5px;
+    background: rgba($white-color, 0.7);
+    z-index: 100;
+    .title {
+        font-size: 16px;
+        text-align: center;
+        margin: 0 0 3px 0;
+    }
+    .image {
+        margin: 0 5px 5px 0;
+        height: 80px;
+    }
+    .description {
+      display: block;
+      display: -webkit-box;
+      max-width: 100%;
+      height: $font-size*$line-height*$lines-to-show + 2px;
+      margin: 0 auto;
+      font-size: $font-size;
+      line-height: $line-height;
+      -webkit-line-clamp: $lines-to-show;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .more_link {
+        position: absolute;
+        bottom: 5px;
+        right: 10px;
+    }
+}
