@@ -48,5 +48,16 @@ module.exports = function(app) {
         });
     });
 
+    app.get('/getDocuments/:username', function(req, res) {
+        var username = req.params.username;
+        User.getUserByUsername(username, function(err, user) {
+            if(err) {
+                throw err;
+            }
+            res.status(200);
+            res.send({ documents: user.documents || '[]' });
+        });
+    });
+
     return app;
 };

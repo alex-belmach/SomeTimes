@@ -2,7 +2,8 @@
     'use strict';
 
     userInfo.$inject = [
-        'loginService'
+        'loginService',
+        'analysisService'
     ];
 
     angular
@@ -10,7 +11,8 @@
         .directive('userInfo', userInfo);
 
     function userInfo(
-        loginService
+        loginService,
+        analysisService
     ) {
         return {
             restrict: 'E',
@@ -22,12 +24,14 @@
             templateUrl: '/components/userInfo/userInfo.tmpl.html',
             controller: 'userInfoCtrl',
             link: function(scope, element) {
-                loginService.getCurrentUser().then(function() {
+                loginService.getCurrentUser().then(function(username) {
                     if(loginService.loginInfo.isLogin === true) {
                         scope.hideSection = false;
                         setTimeout(function() {
                            $(".user_info").addClass("user_info_slided");
                         }, 400);
+
+                        analysisService.restoreDocuments(username);
                     }
                     else {
                         scope.hideSection = true;

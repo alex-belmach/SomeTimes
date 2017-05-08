@@ -78,7 +78,7 @@
         }
 
         function getBookmarks() {
-            let url = '/getBookmarks' + '/' + loginService.getUsername();
+            let url = '/getBookmarks/' + loginService.getUsername();
 
             return $http({
                 method: 'GET',

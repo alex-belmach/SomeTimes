@@ -51,8 +51,10 @@
 					loginInfo.username = response.data.username;
 					loginInfo.avatarUrl = response.data.avatarurl;
 					loginInfo.isLogin = true;
+					return loginInfo.username;
 				} else {
 					loginInfo.isLogin = false;
+					return false;
 				}
 			});
 		}

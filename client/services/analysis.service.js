@@ -26,12 +26,12 @@
             KEY_WORDS_NUM = 5,
             TITLE_MULTIPLIER = 1.5,
             DESCRIPTION_MULTIPLIER = 0.75,
-            PROPER_NOUN_MULTIPLIER = 1.6,
             MAX_DOCUMENT_COUNT = 20,
             ANALYSIS_FREQUENCY = 3;
 
         return {
-            addArticle: addArticle
+            addArticle: addArticle,
+            restoreDocuments: restoreDocuments
         };
 
         function addArticle(article) {
@@ -41,12 +41,30 @@
             $q.all([addTitle, addDescription])
                 .then(saveDocuments)
                 .then(checkAnalysisFrequency)
-                .then(resetKeyWordList)
-                .then(analyse)
-                .then(applyWordMultipliers)
-                .then(cleanUp)
-                .then(console.log)
+                .then(performAnalysis)
                 .catch(handleError);
+        }
+
+        function restoreDocuments(username) {
+            return $http({
+                method: 'GET',
+                url: '/getDocuments/' + username
+            }).then(function(response) {
+                documents = JSON.parse(response.data.documents);
+            }).then(performAnalysis);
+        }
+
+        function performAnalysis() {
+            if (documents.length > 1) {
+                return $q.when()
+                        .then(resetKeyWordList)
+                        .then(analyse)
+                        .then(applyWordMultipliers)
+                        .then(cleanUp)
+                        .then(console.log);
+            }
+
+            return $q.when();
         }
 
         function handleError(err) {
@@ -141,9 +159,19 @@
             var groupedKeyWordList = _.groupBy(keyWordList, function(keyWordObj) {
                 return _.toLower(keyWordObj.word);
             });
-
             keyWordList = [];
 
+            getFinalValues(groupedKeyWordList, keyWordList);
+
+            keyWordList.sort(function(first, second) {
+                return second.value - first.value;
+            });
+            keyWordList = _.slice(keyWordList, 0, KEY_WORDS_NUM);
+
+            return keyWordList;
+        }
+
+        function getFinalValues(groupedKeyWordList, keyWordList) {
             _.forOwn(groupedKeyWordList, function(wordArray, word) {
                 var minMultiplier = 10,
                     wordValue = _.reduce(wordArray, function(sum, currentObj) {
@@ -153,13 +181,6 @@
                     finalValue = _.round(wordValue * minMultiplier, 4);
                 keyWordList.push({ word: word, value: finalValue });
             });
-
-            keyWordList.sort(function(first, second) {
-                return second.value - first.value;
-            });
-            keyWordList = _.slice(keyWordList, 0, KEY_WORDS_NUM);
-
-            return keyWordList;
         }
 
         function getWordWeightInDocument(word, document) {
