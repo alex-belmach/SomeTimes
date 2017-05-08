@@ -26,15 +26,15 @@ module.exports = {
         },
         {
             tag: 'JJ',
-            multiplier: 0.5
+            multiplier: 0.4
         },
         {
             tag: 'JJR',
-            multiplier: 0.5
+            multiplier: 0.4
         },
         {
             tag: 'JJS',
-            multiplier: 0.6
+            multiplier: 0.5
         },
         {
             tag: 'LS',
@@ -50,11 +50,11 @@ module.exports = {
         },
         {
             tag: 'NNP',
-            multiplier: 2
+            multiplier: 1.6
         },
         {
             tag: 'NNPS',
-            multiplier:  2
+            multiplier:  1.6
         },
         {
             tag: 'NNS',
@@ -78,11 +78,11 @@ module.exports = {
         },
         {
             tag: 'RB',
-            multiplier: 0.55
+            multiplier: 0.5
         },
         {
             tag: 'RBR',
-            multiplier: 0.55
+            multiplier: 0.5
         },
         {
             tag: 'RBS',

@@ -22,7 +22,8 @@
             keyWordList = [],
             KEY_WORDS_NUM = 5,
             TITLE_MULTIPLIER = 1.5,
-            DESCRIPTION_MULTIPLIER = 0.75;
+            DESCRIPTION_MULTIPLIER = 0.75,
+            PROPER_NOUN_MULTIPLIER = 1.6;
 
         return {
             addArticle: addArticle
@@ -80,7 +81,7 @@
 
                 var weightMultipliers = response.data;
                 _.forEach(keyWordList, function(keyWordObj, index) {
-                    keyWordObj.multiplier *= weightMultipliers[index];
+                    keyWordObj.multiplier = keyWordObj.multiplier * weightMultipliers[index];
                 });
 
                 return keyWordList;
