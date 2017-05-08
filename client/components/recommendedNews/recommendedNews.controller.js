@@ -48,11 +48,19 @@
 
         function updateCurrentArticle() {
             if (recommendedArticles && recommendedArticles.length) {
+                while ($scope.currentArticle
+                       && $scope.currentArticle.title === recommendedArticles[currentIndex].title) {
+                    increaseCurrentIndex();
+                }
                 $scope.currentArticle = _.cloneDeep(recommendedArticles[currentIndex]);
-                currentIndex = currentIndex + 1 === recommendedArticles.length ? 0 : currentIndex + 1;
+                increaseCurrentIndex();
             } else {
                 updateRecommendedList();
             }
+        }
+
+        function increaseCurrentIndex() {
+            currentIndex = currentIndex + 1 === recommendedArticles.length ? 0 : currentIndex + 1;
         }
 
         function sanitizeArticles(articlesList) {
