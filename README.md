@@ -11,7 +11,7 @@
  2. [Install node.js](https://nodejs.org/en/) globally  
  3. In root folder run command-prompt and install 'node-modules' using `$ npm install` command
  4. In `[server]` folder run command-prompt and start server using `$ nodemon server.js`
- 5. Open web-browser and go to [localhost](http://localhost:5555/)
+ 5. Open web-browser and go to [localhost:5555](http://localhost:5555/)
 
 ## Using Gulp
 For using [Gulp](http://gulpjs.com/) for development next packages was installed:  
