@@ -8,10 +8,13 @@
 
 ## To run application you must do following steps:  
  1. Download repository to your local machine    
- 2. [Install node.js](https://nodejs.org/en/) globally  
- 3. In root folder run command-prompt and install 'node-modules' using `$ npm install` command
- 4. In `[server]` folder run command-prompt and start server using `$ nodemon server.js`
- 5. Open web-browser and go to [localhost:5555](http://localhost:5555/)
+ 2. [Install node.js](https://nodejs.org/en/) globally
+ 3. [Install git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and add directory to PATH
+    or use Git Bash.
+ 4. In root folder run command-prompt and install 'node-modules' using `$ npm install` command
+ 5. In order to build bundles run `$ gulp` in root folder.
+ 6. In `[server]` folder run command-prompt and start server using `$ nodemon server.js`
+ 7. Open web-browser and go to [localhost:5555](http://localhost:5555/)
 
 ## Using Gulp
 For using [Gulp](http://gulpjs.com/) for development next packages was installed:  
