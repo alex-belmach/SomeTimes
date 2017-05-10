@@ -60,11 +60,11 @@
 		}
 
 		function uploadAvatar(avatarUrl) {
-			loginInfo.avatarUrl = avatarUrl;
+			loginInfo.avatarUrl = avatarUrl.length ? avatarUrl : '../resources/min/profile.png';
 			$http({
 				method: 'POST',
 				url: '/uploadAvatar',
-				data: { avatarUrl : avatarUrl, username: loginInfo.username }
+				data: { avatarUrl : loginInfo.avatarUrl, username: loginInfo.username }
 			});
 		}
 

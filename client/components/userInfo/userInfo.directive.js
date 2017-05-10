@@ -25,6 +25,12 @@
             templateUrl: '/components/userInfo/userInfo.tmpl.html',
             controller: 'userInfoCtrl',
             link: function(scope, element) {
+                scope.$watch('displayedAvatarUrl', function() {
+                    if (scope.displayedAvatarUrl && scope.displayedAvatarUrl.length) {
+                        scope.avatarUrl = scope.displayedAvatarUrl;
+                    }
+                });
+
                 loginService.getCurrentUser().then(function(username) {
                     if(loginService.isLoggedIn()) {
                         scope.hideSection = false;
@@ -35,13 +41,17 @@
                         analysisService.restoreDocuments(username).then(function() {
                             scope.loggedIn = true;
                         });
+
+                        scope.username = loginService.loginInfo.username;
+                        scope.avatarUrl = loginService.loginInfo.avatarUrl;
+
+                        if (_.startsWith(scope.avatarUrl, '..')) {
+                            scope.displayedAvatarUrl = '';
+                        }
                     }
                     else {
                         scope.hideSection = true;
                     }
-
-                    scope.username = loginService.loginInfo.username;
-                    scope.avatarUrl = loginService.loginInfo.avatarUrl;
                 });
             }
         };
