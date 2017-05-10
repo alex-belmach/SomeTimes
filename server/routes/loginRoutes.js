@@ -39,38 +39,30 @@ module.exports = function(app) {
         var password  = req.body.password;
         var password2 = req.body.password2;
 
-        req.checkBody('name', 'Name is required').notEmpty();
-        req.checkBody('email', 'Email is required').notEmpty();
-        req.checkBody('email', 'Email is not valid').isEmail();
-        req.checkBody('username', 'Username is required').notEmpty();
-        req.checkBody('password', 'Password is required').notEmpty();
-        req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+        User.findOne({ username: req.body.username }, function(err, user) {
+            if (user) {
+                res.status(401);
+                res.send();
+            }
+        });
 
-        var errors = req.validationErrors();
+        var newUser = new User({
+            avatarurl: "../resources/min/profile.png",
+            username: username
+        });
+        newUser.local = {
+            name: name,
+            email: email,
+            password: password
+        };
 
-        if(errors) {
-            res.status(401);
-            res.send('Unregistered');
-        }
-        else {
-            var newUser = new User({
-                avatarurl: "../resources/min/profile.png",
-                username: username
-            });
-            newUser.local = {
-                name: name,
-                email: email,
-                password: password
-            };
-
-            User.createUser(newUser, function(err, user) {
-                if(err) {
-                    throw err;
-                }
-            });
-            res.status(201);
-            res.send('Registered');
-        }
+        User.createUser(newUser, function(err, user) {
+            if(err) {
+                throw err;
+            }
+        });
+        res.status(201);
+        res.send('Registered');
     });
 
     app.post('/uploadAvatar', function(req, res) {

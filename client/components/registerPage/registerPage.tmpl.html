@@ -1,14 +1,14 @@
 <div class="register_page">
     <div class="container">
-        <form>
+        <form name="register_form">
             <h3 class="register_title">Create new user</h3>
-            <div class="error_note" ng-show="showErrorNote">Please double check your entries</div>
+            <div class="error_note" ng-show="showErrorNote">{{error}}</div>
             <fieldset class="form-group">
-                <input type="text" name="name" placeholder="Name" ng-model="name">
-                <input type="text" name="email" placeholder="Email" ng-model="email">
-                <input type="text" name="username" placeholder="Username" ng-model="username">
-                <input type="password" name="password" placeholder="Password" ng-model="password">
-                <input type="password" name="password2" placeholder="Retype Password" ng-model="password2">
+                <input type="text" name="name" placeholder="Name" ng-model="name" required>
+                <input type="email" name="email" placeholder="Email" ng-model="email" required>
+                <input type="text" name="username" placeholder="Username" ng-model="username" required>
+                <input type="password" name="password" placeholder="Password" ng-model="password" required>
+                <input type="password" name="password2" placeholder="Retype Password" ng-model="password2" required>
             </fieldset>
             <input type="submit" class="btn btn-primary register_btn" value="Submit" ng-click="makeRequest()"/>
             <span class="separator">or</span>

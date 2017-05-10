@@ -51,7 +51,7 @@
         }
         .register_btn {
             &:hover {
-                background-color: #3a67af;   
+                background-color: #3a67af;
             }
         }
         .separator {
@@ -63,11 +63,15 @@
     .error_note {
         font: normal 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
         height: 30px;
-        width: 280px;
+        width: 350px;
         background-color: tomato;
         color: darkred;
         border-radius: 3px;
         margin: 10px auto;
         line-height: 30px;
+    }
+
+    .btn-social {
+        width: 100px;
     }
 }

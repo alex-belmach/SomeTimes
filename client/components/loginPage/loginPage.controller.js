@@ -16,9 +16,19 @@
         $location,
         loginService
     ) {
+        var ERRORS = {
+            common: 'Please double check your entries',
+            fill: 'Please fill both username and password'
+        };
+
         $scope.showErrorNote = false;
 
         $scope.localLogin = function() {
+            if ($scope.login_form.$invalid) {
+                $scope.error = ERRORS.fill;
+                $scope.showErrorNote = true;
+                return;
+            }
             loginService.signIn($scope.username, $scope.password)
             .then(function(response) {
                 if(response.status === 202) {
@@ -27,6 +37,7 @@
                 }
             },
             function(response) {
+                $scope.error = ERRORS.common;
                 $scope.showErrorNote = true;
             });
         };

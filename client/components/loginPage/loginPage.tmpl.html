@@ -1,19 +1,19 @@
 <div class="login_page">
     <div class="container">
         <h3 class="login_title">Enter your credentials</h3>
-        <div class="error_note" ng-show="showErrorNote">Please double check your entries</div>
-        <form>
+        <div class="error_note" ng-show="showErrorNote">{{error}}</div>
+        <form name="login_form">
             <fieldset class="form-group fieldset">
-                <input type="text" class="username" name="username" placeholder="Username" ng-model="username">
-                <input type="password" class="password" name="password" placeholder="Password" ng-model="password">
+                <input type="text" class="username" name="username" placeholder="Username" ng-model="username" required>
+                <input type="password" class="password" name="password" placeholder="Password" ng-model="password" required>
             </fieldset>
             <div>
                 <input type="submit" class="btn btn-primary login_btn" value="Submit" ng-click="localLogin()"/>
                 <span class="separator">or</span>
                 <a class="btn btn-primary register_btn" href="#/register">Register</a>
             </div>
-            <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span>Facebook</a>
-            <a href="/auth/twitter" class="btn btn-info"><span class="fa fa-facebook"></span>Twitter</a>
+            <a href="/auth/facebook" class="btn btn-primary btn-social"><span class="fa fa-facebook"></span>Facebook</a>
+            <a href="/auth/twitter" class="btn btn-info btn-social"><span class="fa fa-facebook"></span>Twitter</a>
         </form>
     </div>
     <footer-section show-back="true"></footer-section>
