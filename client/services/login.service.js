@@ -64,7 +64,7 @@
 			$http({
 				method: 'POST',
 				url: '/uploadAvatar',
-				data: { avatarUrl : avatarUrl }
+				data: { avatarUrl : avatarUrl, username: loginInfo.username }
 			});
 		}
 

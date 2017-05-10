@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-	bcrypt   = require('bcryptjs');
+	bcrypt   = require('bcryptjs'),
+	_		 = require('lodash');
 
 var UserSchema = mongoose.Schema({
 	local: {
@@ -64,6 +65,10 @@ module.exports.getUserById = function(id, callback){
 };
 
 module.exports.comparePassword = function(candidatePassword, hash, callback){
+	if (_.isUndefined(hash)) {
+		callback(null, false);
+		return;
+	}
 	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
     	if(err) throw err;
     	callback(null, isMatch);

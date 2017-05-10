@@ -26,7 +26,7 @@
             controller: 'userInfoCtrl',
             link: function(scope, element) {
                 loginService.getCurrentUser().then(function(username) {
-                    if(loginService.loginInfo.isLogin === true) {
+                    if(loginService.isLoggedIn()) {
                         scope.hideSection = false;
                         setTimeout(function() {
                            $(".user_info").addClass("user_info_slided");

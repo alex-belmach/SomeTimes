@@ -74,7 +74,7 @@ module.exports = function(app) {
     });
 
     app.post('/uploadAvatar', function(req, res) {
-        User.update({_id: ID}, {
+        User.update({ username: req.body.username }, {
             avatarurl: req.body.avatarUrl
         }, function(err, docs) {
             if(err) {
