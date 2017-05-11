@@ -19,7 +19,6 @@
 			};
 
 		return {
-			loginInfo: loginInfo,
 			getCurrentUser: getCurrentUser,
 			uploadAvatar: uploadAvatar,
 			isLoggedIn: isLoggedIn,

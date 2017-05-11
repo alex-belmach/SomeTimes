@@ -16,10 +16,14 @@
     ) {
         $scope.$watch('isDisplayed', function() {
             if ($scope.isDisplayed) {
-                bookmarkService.getBookmarks()
-                    .then(updateBookmarkList);
+                fetchAllBookmarks();
             }
         });
+
+        function fetchAllBookmarks() {
+            bookmarkService.getBookmarks()
+                .then(updateBookmarkList);
+        }
 
         function updateBookmarkList(bookmarks) {
             $scope.bookmarkArticles = bookmarks;

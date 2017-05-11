@@ -16,15 +16,15 @@
         $timeout,
         loginService
     ) {
-        $scope.uploadAvatar = () => {
-            if ($scope.avatarUrl === loginService.loginInfo.avatarUrl) {
+        $scope.uploadAvatar = function() {
+            if ($scope.avatarUrl === loginService.getAvatarUrl()) {
                 return;
             }
 
             loginService.uploadAvatar($scope.avatarUrl);
         };
 
-        $scope.logout = () => {
+        $scope.logout = function() {
             $(".user_info").removeClass("user_info_slided");
 
             $timeout(function() {

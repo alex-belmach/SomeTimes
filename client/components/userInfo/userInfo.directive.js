@@ -42,8 +42,8 @@
                             scope.loggedIn = true;
                         });
 
-                        scope.username = loginService.loginInfo.username;
-                        scope.avatarUrl = loginService.loginInfo.avatarUrl;
+                        scope.username = loginService.getUsername();
+                        scope.avatarUrl = loginService.getAvatarUrl();
 
                         if (_.startsWith(scope.avatarUrl, '..')) {
                             scope.displayedAvatarUrl = '';

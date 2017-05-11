@@ -156,6 +156,16 @@
             var wordsArray = _.map(keyWordList, function(keyWordObj) {
                 return keyWordObj.word;
             });
+            return getWordMultipliers(wordsArray).then(function(weightMultipliers) {
+                _.forEach(keyWordList, function(keyWordObj, index) {
+                    keyWordObj.multiplier = keyWordObj.multiplier * weightMultipliers[index];
+                });
+
+                return keyWordList;
+            });
+        }
+
+        function getWordMultipliers(wordsArray) {
             return $http({
                 method: 'POST',
                 url: '/getWordsWeightMultipliers',
@@ -164,13 +174,7 @@
                 if (response.status !== 200) {
                     throw new Error('Error while getting words weight multipliers');
                 }
-
-                var weightMultipliers = response.data;
-                _.forEach(keyWordList, function(keyWordObj, index) {
-                    keyWordObj.multiplier = keyWordObj.multiplier * weightMultipliers[index];
-                });
-
-                return keyWordList;
+                return response.data;
             });
         }
 

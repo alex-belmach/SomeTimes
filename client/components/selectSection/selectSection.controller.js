@@ -14,10 +14,12 @@
         $scope,
         newsService
     ) {
-        newsService.getSectionList().then(function (sectionList) {
+        newsService.getSectionList().then(setSectionList);
+
+        function setSectionList(sectionList) {
             var allSections = { name: '', niceName: 'All News' };
             $scope.sectionList = _.concat(sectionList, allSections);
-        });
+        }
 
         $scope.chooseSection = function() {
             if (_.isUndefined($scope.currentSection)) {

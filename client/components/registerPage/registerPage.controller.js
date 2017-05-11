@@ -25,10 +25,10 @@
 
         $scope.showErrorNote = false;
 
-        $scope.makeRequest = () => {
+        $scope.makeRequest = function() {
             if (!validate()) {
                 return;
-            }           
+            }
 
             var userData = {
                 name: $scope.name,

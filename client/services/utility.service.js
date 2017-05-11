@@ -7,15 +7,10 @@
 
     function utilityService() {
         return {
-            dateCompareFunction: dateCompareFunction,
             getHostName: getHostName,
             sortByLatest: sortByLatest,
             scrollPageToTop: scrollPageToTop
         };
-
-        function dateCompareFunction(firstDate, secondDate) {
-            return firstDate === secondDate ? 0 : firstDate > secondDate ? -1 : 1;
-        }
 
         function getHostName(url) {
             var match = url.match(/(.*):\/\/(www[0-9]?\.)?(.[^/:]+)/i);
@@ -36,6 +31,10 @@
             return articles.sort(function(firstArticle, secondArticle) {
                 return dateCompareFunction(firstArticle.publishedAt, secondArticle.publishedAt);
             });
+        }
+
+        function dateCompareFunction(firstDate, secondDate) {
+            return firstDate === secondDate ? 0 : firstDate > secondDate ? -1 : 1;
         }
 
         function scrollPageToTop() {
