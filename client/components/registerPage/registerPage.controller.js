@@ -17,18 +17,24 @@
         loginService
     ) {
         var ERRORS = {
+            required: 'Please fill all fields',
+            usernameLength: 'Username must contain from 4 to 14 symbols',
+            username: 'Username must contain only symbols a-z A-Z 0-9',
             exists: 'User already exists',
-            fill: 'Please fill all fields',
             email: 'Please enter valid email',
-            password: 'Please fill the same password'
+            password: 'Password must containt 6-20 symbols a-z A-Z 0-9',
+            password2: 'Please fill the same password'
         };
 
         $scope.showErrorNote = false;
 
         $scope.makeRequest = function() {
             if (!validate()) {
+                $scope.showErrorNote = true;
                 return;
             }
+
+            $scope.showErrorNote = false;
 
             var userData = {
                 name: $scope.name,
@@ -51,24 +57,26 @@
             });
         };
 
-        function validate() {
-            if ($scope.register_form.$error.required) {
-                $scope.error = ERRORS.fill;
-                $scope.showErrorNote = true;
+        function checkRule(rule) {
+            if ($scope.register_form.$error[rule]) {
+                $scope.error = ERRORS[rule];
                 return false;
             }
-            if ($scope.register_form.$error.email) {
-                $scope.error = ERRORS.email;
-                $scope.showErrorNote = true;
-                return false;
-            }
-            if ($scope.password !== $scope.password2) {
-                $scope.error = ERRORS.password;
-                $scope.showErrorNote = true;
-                return false;
-            }
-            $scope.showErrorNote = false;
             return true;
+        }
+
+        function checkPassword() {
+            if ($scope.password !== $scope.password2) {
+                $scope.error = ERRORS[password2];
+                $scope.showErrorNote = true;
+                return false;
+            }
+            return true;
+        }
+
+        function validate() {
+            return checkRule('required') && checkRule('usernameLength') && checkRule('username')
+                    && checkRule('email') && checkRule('password') && checkPassword();
         }
     }
 })();
