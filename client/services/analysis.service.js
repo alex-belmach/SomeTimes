@@ -236,6 +236,9 @@
                     var existingKeyWord = _.find(keyWordList, { word: documentWord });
                     if (!existingKeyWord) {
                         keyWordList.push({ word: documentWord, value: 0, multiplier: positionMultiplier });
+                    } else {
+                        existingKeyWord.multiplier = _.divide(
+                                                    _.sum(existingKeyWord.multiplier, positionMultiplier), 2);
                     }
                 });
             });
